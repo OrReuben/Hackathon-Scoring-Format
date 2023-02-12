@@ -1,0 +1,55 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100vw;
+  min-height: 100vh;
+  background-color: var(--light-grey);
+  font-size: 15px;
+  padding: 1rem;
+}
+
+.App {
+  position: relative;
+  min-width: 350px;
+}
+.grid{
+  display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2rem;
+    margin:1rem 0;
+}
+
+.App select {
+  width: 100%;
+  border: none;
+  padding: 0.5rem 0rem;
+  text-align: center;
+  background-color: var(--white);
+}
+.App select option {
+  padding: 1rem 0rem;
+}
+
+@media only screen and (max-width:1000px){
+  .grid{
+    grid-template-columns: repeat(2,1fr)
+  }
+}
+@media only screen and (max-width:700px){
+
+  .grid{
+    grid-template-columns: repeat(1,1fr);
+    justify-items: center;
+  }
+  .param-card{
+    width: 90vw;
+    padding: 1rem;
+  }
+  .css-ece9u5{
+    margin-right: 10px;
+  }
+  .App{
+    min-width: auto;
+  }
+}

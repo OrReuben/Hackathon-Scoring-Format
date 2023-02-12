@@ -1,0 +1,60 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
+export default function SelectTeam({ selectedTeam, setSelectedTeam, setSelectedContestants }) {
+  const handleChange = (event) => {
+    setSelectedTeam(event.target.value.split('/')[0]);
+    setSelectedContestants(event.target.value.split('/')[1])
+  };
+
+  return (
+    <Box sx={{ minWidth: 120 }}>
+      <FormControl required sx={{ m: 1, minWidth: 120 }} fullWidth>
+        <InputLabel id="demo-simple-select-required-label">
+          Select a team
+        </InputLabel>
+        <Select
+        defaultValue={''}
+          labelId="demo-simple-select-required-label"
+          id="demo-simple-select-required"
+          value={selectedTeam}
+          label="Select a team *"
+          onChange={handleChange}
+        >
+          <MenuItem value={"ReferHer - Application / Lisa and Roi"}>
+            ReferHer - Application : By Lisa and Roi
+          </MenuItem>
+          <MenuItem value={"ReferHer - Dashboard / Roi and Hila"}>
+            ReferHer - Dashboard : By Roi and Hila
+          </MenuItem>
+          <MenuItem value={"Cyberillium - Crawler / Netanel and Asaf"}>
+            Cyberillium - Crawler : By Netanel and Asaf
+          </MenuItem>
+          <MenuItem value={"Cyberillium - Dashboard / Omer and Omer Levy"}>
+            Cyberillium - Dashboard : By Omer and Omer Levy
+          </MenuItem>
+          <MenuItem value={"ARDC - Resourced / Or and Ido"}>
+            ARDC - Resourced : By Or and Ido
+          </MenuItem>
+          <MenuItem value={"ARDC - Chatbot / Omer and Mark"}>
+            ARDC - Chatbot : By Omer and Mark
+          </MenuItem>
+          <MenuItem value={"Emotiplay / Itay and Ana"}>Emotiplay : By Itay and Ana</MenuItem>
+          <MenuItem value={"Atidim - Data Panel / Adiv and Ravid"}>
+            Atidim - Data Panel : By Adiv and Ravid
+          </MenuItem>
+          <MenuItem value={"Baggages / Rutzki and Tal"}>
+            Baggages : By Roy Rutzki and Tal
+          </MenuItem>
+          <MenuItem value={"Tennis - System / Shalem and Matan"}>
+            Tennis - System : By Roy Shalem and Matan
+          </MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  );
+}

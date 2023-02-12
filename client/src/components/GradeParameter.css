@@ -1,0 +1,21 @@
+.param-card{
+    padding:1rem 2rem;
+    background-color: var(--red);
+    border-radius: 10px;
+}
+.param-card h3{
+    color: var(--Very-dark-blue);
+    padding:0.25rem 0rem;
+    font-size: 1.1rem;
+}
+.param-card input{
+    border:none;
+    border-radius: 2px;
+    padding: 0.5rem 1rem;
+}
+.param-card span{
+    color: var(--Very-dark-blue);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-left:10px;
+}

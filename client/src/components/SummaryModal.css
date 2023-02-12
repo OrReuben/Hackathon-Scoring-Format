@@ -1,0 +1,12 @@
+.modal{
+    display: flex;
+    justify-content: center;
+}
+
+.score-info p {
+    line-height: 2rem;
+    font-size: 1.1rem;
+}
+.score-info hr{
+    margin:1rem 0
+}
