@@ -51,4 +51,7 @@ body {
   .App{
     min-width: auto;
   }
+  .css-quj9j6-MuiTable-root{
+    min-width: 450px !important;
+  }
 }
