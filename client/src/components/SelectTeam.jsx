@@ -5,24 +5,25 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function SelectTeam({ selectedTeam, setSelectedTeam, setSelectedContestants }) {
+export default function SelectTeam({
+  selectedTeam,
+  setSelectedTeam,
+  setSelectedContestants,
+}) {
   const handleChange = (event) => {
-    setSelectedTeam(event.target.value.split('/')[0]);
-    setSelectedContestants(event.target.value.split('/')[1])
+    setSelectedTeam(event.target.value.split("/")[0]);
+    setSelectedContestants(event.target.value.split("/")[1]);
   };
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl required sx={{ m: 1, minWidth: 120 }} fullWidth>
-        <InputLabel id="demo-simple-select-required-label">
-          Select a team
-        </InputLabel>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
         <Select
-        defaultValue={''}
-          labelId="demo-simple-select-required-label"
-          id="demo-simple-select-required"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
           value={selectedTeam}
-          label="Select a team *"
+          label="Age"
           onChange={handleChange}
         >
           <MenuItem value={"ReferHer - Application / Lisa and Roi"}>
@@ -43,7 +44,9 @@ export default function SelectTeam({ selectedTeam, setSelectedTeam, setSelectedC
           <MenuItem value={"ARDC - Chatbot / Omer and Mark"}>
             ARDC - Chatbot : By Omer and Mark
           </MenuItem>
-          <MenuItem value={"Emotiplay / Itay and Ana"}>Emotiplay : By Itay and Ana</MenuItem>
+          <MenuItem value={"Emotiplay / Itay and Ana"}>
+            Emotiplay : By Itay and Ana
+          </MenuItem>
           <MenuItem value={"Atidim - Data Panel / Adiv and Ravid"}>
             Atidim - Data Panel : By Adiv and Ravid
           </MenuItem>
