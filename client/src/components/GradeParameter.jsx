@@ -20,7 +20,7 @@ const GradeParameter = ({ param, maxParamValue, func }) => {
       <h3>{param}</h3>
       <div>
         {" "}
-        <input type="text" value={value} onChange={handleChange} />{" "}
+        <input type="tel" value={value} onChange={handleChange} />{" "}
         <span> / {maxParamValue}</span>
       </div>
     </div>
