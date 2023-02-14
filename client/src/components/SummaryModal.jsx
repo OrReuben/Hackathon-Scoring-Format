@@ -23,6 +23,7 @@ export default function SummaryModal({
   creativityScore,
   presentationScore,
   selectedContestants,
+  setRefreshScoreboard,
 }) {
   const [open, setOpen] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
@@ -61,10 +62,10 @@ export default function SummaryModal({
     setOpen(false);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     try {
       setLoads(true);
-      axios.patch(`${updateScores}`, {
+      await axios.patch(`${updateScores}`, {
         project: selectedTeam,
         contestants: selectedContestants,
         score: totalScore,
@@ -72,9 +73,7 @@ export default function SummaryModal({
       setLoads(false);
       toast.success("Successfully Applied!");
       handleClose();
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      setRefreshScoreboard(Math.random());
     } catch (err) {
       console.log(err.message);
       toast.error("Something went wrong..");

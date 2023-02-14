@@ -12,30 +12,34 @@ import { getScores } from "../apiRoutes";
 import { useEffect } from "react";
 import Loading from "./Loading";
 
-export default function Leaderboard() {
+export default function Leaderboard({ refreshScoreboard }) {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  
   useEffect(() => {
     try {
       setLoading(true);
       const fetchScores = async () => {
-        const fetchedScores = await axios.get(`${getScores}`);
-        setScores(fetchedScores.data);
+      await axios
+          .get(`${getScores}`)
+          .then((data) => setScores(data.data));
         setLoading(false);
       };
       fetchScores();
     } catch (err) {
       console.log(err.message);
     }
-  }, []);
+  }, [refreshScoreboard]);
 
   return (
     <>
       {loading ? (
         <Loading />
       ) : scores.length === 0 ? (
-        <h2 style={{textAlign:'center', padding:'2rem 0'}}>No Scores Currently!</h2>
+        <h2 style={{ textAlign: "center", padding: "2rem 0" }}>
+          No Scores Currently!
+        </h2>
       ) : (
         <TableContainer component={Paper} sx={{ mt: 3 }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

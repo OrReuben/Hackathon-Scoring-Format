@@ -21,6 +21,7 @@ function App() {
   const [complicationScore, setComplicationScore] = useState(0);
   const [creativityScore, setCreativityScore] = useState(0);
   const [presentationScore, setPresentationScore] = useState(0);
+  const [refreshScoreboard, setRefreshScoreboard] = useState(0)
 
   return (
     <div className="App">
@@ -90,8 +91,9 @@ function App() {
         creativityScore={creativityScore}
         presentationScore={presentationScore}
         selectedContestants = {selectedContestants}
+        setRefreshScoreboard = {setRefreshScoreboard}
       />
-      <Leaderboard />
+      <Leaderboard refreshScoreboard = {refreshScoreboard}/>
     </div>
   );
 }
