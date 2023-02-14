@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Leaderboard from "./components/Leaderboard";
 import SelectTeam from "./components/SelectTeam";
+import Header from "./components/Header";
 
 function App() {
   const [selectedTeam, setSelectedTeam] = useState("");
@@ -24,6 +25,7 @@ function App() {
   return (
     <div className="App">
       <ToastContainer />
+      <Header />
       <SelectTeam
         setSelectedTeam={setSelectedTeam}
         SelectedTeam={selectedTeam}

@@ -20,6 +20,7 @@ export default function SelectTeam({
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Select Team And Project</InputLabel>
         <Select
+        defaultValue={""}
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={selectedTeam}
