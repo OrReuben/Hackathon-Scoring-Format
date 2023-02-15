@@ -25,6 +25,7 @@ function App() {
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
   const [user, setUser] = useState(false);
 
+
   return (
     <div className="App">
       <ToastContainer />

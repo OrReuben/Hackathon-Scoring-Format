@@ -16,8 +16,8 @@ const Footer = () => {
         <h1>In Collaboration With</h1>
         <div className='img-container'>
       <img src={cyberpro} alt="cyberpro" />
-      <img src={atidim} alt="atidim" />
       <img src={NewAtidim} alt="NewAtidim" />
+      <img src={atidim} alt="atidim" />
       <img src={arrow} alt="arrow" />
       <img src={ARDC} alt="ARDC" />
       <img src={Cyberllinium} alt="Cyberllinium" />

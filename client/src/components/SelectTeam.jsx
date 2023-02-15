@@ -10,10 +10,11 @@ export default function SelectTeam({
   setSelectedTeam,
   setSelectedContestants,
 }) {
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     setSelectedTeam(event.target.value.split("/")[0]);
     setSelectedContestants(event.target.value.split("/")[1]);
   };
+
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -27,7 +28,7 @@ export default function SelectTeam({
           label="Select Team And Project *"
           onChange={handleChange}
         >
-          <MenuItem value={"ReferHer - Application / Lisa and Roi"}>
+          <MenuItem value={"ReferHer - Application / Lisa, Roi and Hila"}>
             ReferHer - Application : By Lisa, Roi and Hila
           </MenuItem>
           {/* <MenuItem value={"ReferHer - Dashboard / Roi and Hila"}>

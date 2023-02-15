@@ -62,18 +62,46 @@ export default function SummaryModal({
     setOpen(false);
   };
 
+  const checkIfVoted = async () => {
+    const allVotes = localStorage.getItem('voted')
+    if(!allVotes){
+      return false
+    } else {
+      const parsedVotes = await JSON.parse(allVotes).votes
+      const voteResults = parsedVotes.map((vote) => vote === selectedTeam)
+      console.log(voteResults)
+      return voteResults.includes(true)
+    }
+  }
+
   const handleSend = async () => {
     try {
-      setLoads(true);
-      await axios.patch(`${updateScores}`, {
-        project: selectedTeam,
-        contestants: selectedContestants,
-        score: totalScore,
-      });
-      setLoads(false);
-      toast.success("Successfully Applied!");
-      handleClose();
-      setRefreshScoreboard(Math.random());
+      if (await checkIfVoted()) {
+        toast.error("You have already voted for the team!");
+      } else {
+        setLoads(true);
+        await axios.patch(`${updateScores}`, {
+          project: selectedTeam,
+          contestants: selectedContestants,
+          score: totalScore,
+        });
+        setLoads(false);
+        toast.success("Successfully Applied!");
+        handleClose();
+        setRefreshScoreboard(Math.random());
+        if (!localStorage.getItem("voted")) {
+          localStorage.setItem(
+            "voted",
+            JSON.stringify({ votes: [selectedTeam] })
+          );
+        } else {
+          const allVotes = JSON.parse(localStorage.getItem("voted"));
+          localStorage.setItem(
+            "voted",
+            JSON.stringify({ votes: [...allVotes.votes, selectedTeam] })
+          );
+        }
+      }
     } catch (err) {
       console.log(err.message);
       toast.error("Something went wrong..");
