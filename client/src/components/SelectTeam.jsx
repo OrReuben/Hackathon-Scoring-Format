@@ -28,11 +28,11 @@ export default function SelectTeam({
           onChange={handleChange}
         >
           <MenuItem value={"ReferHer - Application / Lisa and Roi"}>
-            ReferHer - Application : By Lisa and Roi
+            ReferHer - Application : By Lisa, Roi and Hila
           </MenuItem>
-          <MenuItem value={"ReferHer - Dashboard / Roi and Hila"}>
+          {/* <MenuItem value={"ReferHer - Dashboard / Roi and Hila"}>
             ReferHer - Dashboard : By Roi and Hila
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem value={"Cyberillium - Crawler / Netanel and Asaf"}>
             Cyberillium - Crawler : By Netanel and Asaf
           </MenuItem>
