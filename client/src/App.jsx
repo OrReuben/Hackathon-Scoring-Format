@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Leaderboard from "./components/Leaderboard";
 import SelectTeam from "./components/SelectTeam";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const [selectedTeam, setSelectedTeam] = useState("");
@@ -21,7 +22,7 @@ function App() {
   const [complicationScore, setComplicationScore] = useState(0);
   const [creativityScore, setCreativityScore] = useState(0);
   const [presentationScore, setPresentationScore] = useState(0);
-  const [refreshScoreboard, setRefreshScoreboard] = useState(0)
+  const [refreshScoreboard, setRefreshScoreboard] = useState(0);
 
   return (
     <div className="App">
@@ -35,12 +36,12 @@ function App() {
       <div className="grid">
         <GradeParameter
           param={"Goal Reached"}
-          maxParamValue={15}
+          maxParamValue={10}
           func={setGoalScore}
         />
         <GradeParameter
           param={"Teamwork"}
-          maxParamValue={20}
+          maxParamValue={15}
           func={setTeamworkScore}
         />
         <GradeParameter
@@ -90,10 +91,11 @@ function App() {
         complicationScore={complicationScore}
         creativityScore={creativityScore}
         presentationScore={presentationScore}
-        selectedContestants = {selectedContestants}
-        setRefreshScoreboard = {setRefreshScoreboard}
+        selectedContestants={selectedContestants}
+        setRefreshScoreboard={setRefreshScoreboard}
       />
-      <Leaderboard refreshScoreboard = {refreshScoreboard}/>
+      <Leaderboard refreshScoreboard={refreshScoreboard} />
+      <Footer />
     </div>
   );
 }
