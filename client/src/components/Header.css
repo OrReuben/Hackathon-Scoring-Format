@@ -29,7 +29,7 @@ position: relative;
     .header-container .login{
         position: absolute;
         top:0.5rem;
-        right:0.5rem;
+        right:-0.25rem;
         display: flex;
         flex-direction: column;
         align-items: center;
