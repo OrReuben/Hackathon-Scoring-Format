@@ -23,13 +23,11 @@ function App() {
   const [creativityScore, setCreativityScore] = useState(0);
   const [presentationScore, setPresentationScore] = useState(0);
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
-  const [user, setUser] = useState(false);
-
 
   return (
     <div className="App">
       <ToastContainer />
-      <Header setUser = {setUser} />
+      <Header />
       <SelectTeam
         setSelectedTeam={setSelectedTeam}
         SelectedTeam={selectedTeam}
@@ -96,7 +94,7 @@ function App() {
         selectedContestants={selectedContestants}
         setRefreshScoreboard={setRefreshScoreboard}
       />
-      {user && <Leaderboard refreshScoreboard={refreshScoreboard} />}
+      {localStorage.getItem('logged') && <Leaderboard refreshScoreboard={refreshScoreboard} />}
       <Footer />
     </div>
   );

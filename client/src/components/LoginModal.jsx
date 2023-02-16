@@ -12,7 +12,7 @@ import axios from "axios";
 import { loginRoute } from "../apiRoutes";
 import { toast } from "react-toastify";
 
-export default function LoginModal({ setUser }) {
+export default function LoginModal() {
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +32,7 @@ export default function LoginModal({ setUser }) {
       if (login) {
         setOpen(false);
         toast.success(login.data);
-        setUser(true);
+        localStorage.setItem('logged', true)
         setLoads(false);
       }
     } catch (err) {
