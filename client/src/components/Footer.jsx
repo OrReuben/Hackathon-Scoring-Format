@@ -8,6 +8,7 @@ import Misrad from "../assets/HaAgaf.png";
 import ReferHer from "../assets/ReferHer.jpeg";
 import Tennis from "../assets/Tennis.jpeg";
 import NewAtidim from "../assets/NewAtidim.png";
+import IDF from "../assets/IDF_new.png";
 
 import './Footer.css'
 const Footer = () => {
@@ -18,6 +19,7 @@ const Footer = () => {
       <img src={cyberpro} alt="cyberpro" />
       <img src={NewAtidim} alt="NewAtidim" />
       <img src={atidim} alt="atidim" />
+        <img src={IDF} alt="IDF" />
       <img src={arrow} alt="arrow" />
       <img src={ARDC} alt="ARDC" />
       <img src={Cyberllinium} alt="Cyberllinium" />
