@@ -28,8 +28,8 @@ export default function SelectTeam({
           label="Select Team And Project *"
           onChange={handleChange}
         >
-          <MenuItem value={"ReferHer - Application / Lisa, Roi and Hila"}>
-            ReferHer - Application : By Lisa, Roi and Hila
+          <MenuItem value={"Tennis - System / Shalem and Matan"}>
+            Tennis - System : By Roy Shalem and Matan
           </MenuItem>
           {/* <MenuItem value={"ReferHer - Dashboard / Roi and Hila"}>
             ReferHer - Dashboard : By Roi and Hila
@@ -55,8 +55,8 @@ export default function SelectTeam({
           <MenuItem value={"Baggages / Rutzki and Tal"}>
             Baggages : By Roy Rutzki and Tal
           </MenuItem>
-          <MenuItem value={"Tennis - System / Shalem and Matan"}>
-            Tennis - System : By Roy Shalem and Matan
+          <MenuItem value={"ReferHer - Application / Lisa, Roi and Hila"}>
+            ReferHer - Application : By Lisa, Roi and Hila
           </MenuItem>
         </Select>
       </FormControl>
