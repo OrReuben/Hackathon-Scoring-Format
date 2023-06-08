@@ -15,49 +15,43 @@ export default function SelectTeam({
     setSelectedContestants(event.target.value.split("/")[1]);
   };
 
-
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Select Team And Project</InputLabel>
+        <InputLabel id="demo-simple-select-label">
+          Select Team And Project
+        </InputLabel>
         <Select
-        defaultValue={""}
+          defaultValue={""}
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={selectedTeam}
           label="Select Team And Project *"
           onChange={handleChange}
         >
-          <MenuItem value={"Tennis - System / Shalem and Matan"}>
-            Tennis - System : By Roy Shalem and Matan
+          <MenuItem value={"Farmer2Consumer / Kim and Lavi"}>
+            Farmer2Consumer
           </MenuItem>
-          {/* <MenuItem value={"ReferHer - Dashboard / Roi and Hila"}>
-            ReferHer - Dashboard : By Roi and Hila
-          </MenuItem> */}
-          <MenuItem value={"Cyberillium - Crawler / Netanel and Asaf"}>
-            Cyberillium - Crawler : By Netanel and Asaf
+          <MenuItem value={"Environmental Volunteering / David and Amit"}>
+            Environmental Volunteering
           </MenuItem>
-          <MenuItem value={"Cyberillium - Dashboard / Omer and Omer Levy"}>
-            Cyberillium - Dashboard : By Omer and Omer Levy
+          <MenuItem value={"Beach and forest cleaning / Gitam and Ran"}>
+            Beach and forest cleaning
           </MenuItem>
-          <MenuItem value={"ARDC - Resourced / Or and Ido"}>
-            ARDC - Resourced : By Or and Ido
+          <MenuItem value={"MoveItOn / Nitai and Guy"}>MoveItOn</MenuItem>
+          <MenuItem value={"Be Envioremently Better / Paz and Itay"}>
+            Be Envioremently Better
           </MenuItem>
-          <MenuItem value={"ARDC - Chatbot / Omer and Mark"}>
-            ARDC - Chatbot : By Omer and Mark
+          <MenuItem value={"Envioremental Hazards / Sahar and Chen"}>
+            Envioremental Hazards
           </MenuItem>
-          <MenuItem value={"Emotiplay / Itay and Ana"}>
-            Emotiplay : By Itay and Ana
+          <MenuItem value={"Envioremental Tips Forum / Shahar and Yoav"}>
+            Envioremental Tips Forum
           </MenuItem>
-          <MenuItem value={"Atidim - Data Panel / Adiv and Ravid"}>
-            Atidim - Data Panel : By Adiv and Ravid
+          <MenuItem value={"Reverse Feedback / Lior and Avshalom"}>
+            Reverse Feedback
           </MenuItem>
-          <MenuItem value={"Baggages / Rutzki and Tal"}>
-            Baggages : By Roy Rutzki and Tal
-          </MenuItem>
-          <MenuItem value={"ReferHer - Application / Lisa, Roi and Hila"}>
-            ReferHer - Application : By Lisa, Roi and Hila
-          </MenuItem>
+          <MenuItem value={"Quick Bin / Gil and Daniel"}>Quick Bin</MenuItem>
         </Select>
       </FormControl>
     </Box>

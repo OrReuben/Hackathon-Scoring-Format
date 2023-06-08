@@ -38,7 +38,6 @@ export default function SummaryModal({
       technologiesScore > 0 &&
       frontendDesignScore > 0 &&
       frontendFunctionalityScore > 0 &&
-      backendFunctionalityScore > 0 &&
       complicationScore > 0 &&
       creativityScore > 0 &&
       presentationScore > 0
@@ -49,7 +48,6 @@ export default function SummaryModal({
           parseInt(technologiesScore) +
           parseInt(frontendDesignScore) +
           parseInt(frontendFunctionalityScore) +
-          parseInt(backendFunctionalityScore) +
           parseInt(complicationScore) +
           parseInt(creativityScore) +
           parseInt(presentationScore)

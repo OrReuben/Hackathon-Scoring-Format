@@ -18,17 +18,16 @@ function App() {
   const [frontendDesignScore, setFrontendDesignScore] = useState(0);
   const [frontendFunctionalityScore, setFrontendFunctionalityScore] =
     useState(0);
-  const [backendFunctionalityScore, setBackendFunctionalityScore] = useState(0);
   const [complicationScore, setComplicationScore] = useState(0);
   const [creativityScore, setCreativityScore] = useState(0);
   const [presentationScore, setPresentationScore] = useState(0);
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
-  const [user, setUser] = useState(localStorage.getItem('logged'))
+  const [user, setUser] = useState(localStorage.getItem("logged"));
 
   return (
     <div className="App">
       <ToastContainer />
-      <Header setUser = {setUser}/>
+      <Header setUser={setUser} />
       <SelectTeam
         setSelectedTeam={setSelectedTeam}
         SelectedTeam={selectedTeam}
@@ -37,17 +36,17 @@ function App() {
       <div className="grid">
         <GradeParameter
           param={"Goal Reached"}
-          maxParamValue={10}
+          maxParamValue={20}
           func={setGoalScore}
         />
         <GradeParameter
           param={"Teamwork"}
-          maxParamValue={15}
+          maxParamValue={10}
           func={setTeamworkScore}
         />
         <GradeParameter
           param={"Technologies used"}
-          maxParamValue={10}
+          maxParamValue={15}
           func={setTechnologiesScore}
         />
         <GradeParameter
@@ -59,11 +58,6 @@ function App() {
           param={"Front-end Functionality"}
           maxParamValue={10}
           func={setFrontendFunctionalityScore}
-        />
-        <GradeParameter
-          param={"Back-end Functionality"}
-          maxParamValue={10}
-          func={setBackendFunctionalityScore}
         />
         <GradeParameter
           param={"Complication"}
@@ -88,7 +82,6 @@ function App() {
         technologiesScore={technologiesScore}
         frontendDesignScore={frontendDesignScore}
         frontendFunctionalityScore={frontendFunctionalityScore}
-        backendFunctionalityScore={backendFunctionalityScore}
         complicationScore={complicationScore}
         creativityScore={creativityScore}
         presentationScore={presentationScore}

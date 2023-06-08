@@ -4,7 +4,7 @@ import LoginModal from "./LoginModal";
 const Header = ({setUser}) => {
   return (
     <div className="header-container">
-      <h1>Hackathon - November</h1>
+      <h1>Hackathon - March</h1>
       <div className="login">
         <LoginModal setUser = {setUser} />
        <span> Login </span>
