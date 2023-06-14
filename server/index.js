@@ -9,6 +9,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Connect to MongoDB
+mongoose.set('strictQuery', true)
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -17,6 +18,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -24,6 +26,15 @@ app.get("/scores", async (req, res) => {
   try {
     const scores = await Score.find().sort({ totalScore: -1 });
     return res.send(scores);
+  } catch (error) {
+    return res.status(400).send({ error: error.message });
+  }
+});
+
+app.delete("/scores/reset", async (req, res) => {
+  try {
+     await Score.deleteMany({});
+    return res.send("All scores has been successfully resetted!");
   } catch (error) {
     return res.status(400).send({ error: error.message });
   }

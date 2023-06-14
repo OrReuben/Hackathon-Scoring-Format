@@ -1,0 +1,16 @@
+.leaderboard-button{
+    border:none;
+    background-color: white;
+    padding:0.75rem 1rem;
+    margin:0.5rem;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 3px;
+}
+.leaderboard-button:hover{
+    background-color: red;
+    color: white;
+    outline: black;
+}

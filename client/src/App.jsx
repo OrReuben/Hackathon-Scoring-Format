@@ -88,7 +88,7 @@ function App() {
         selectedContestants={selectedContestants}
         setRefreshScoreboard={setRefreshScoreboard}
       />
-      {user && <Leaderboard refreshScoreboard={refreshScoreboard} />}
+      {user && <Leaderboard refreshScoreboard={refreshScoreboard} user = {user} setRefreshScoreboard = {setRefreshScoreboard} />}
       <Footer />
     </div>
   );

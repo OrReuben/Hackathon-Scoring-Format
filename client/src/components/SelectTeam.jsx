@@ -29,29 +29,9 @@ export default function SelectTeam({
           label="Select Team And Project *"
           onChange={handleChange}
         >
-          <MenuItem value={"Farmer2Consumer / Kim and Lavi"}>
-            Farmer2Consumer
-          </MenuItem>
-          <MenuItem value={"Environmental Volunteering / David and Amit"}>
-            Environmental Volunteering
-          </MenuItem>
-          <MenuItem value={"Beach and forest cleaning / Gitam and Ran"}>
-            Beach and forest cleaning
-          </MenuItem>
-          <MenuItem value={"MoveItOn / Nitai and Guy"}>MoveItOn</MenuItem>
-          <MenuItem value={"Be Envioremently Better / Paz and Itay"}>
-            Be Envioremently Better
-          </MenuItem>
-          <MenuItem value={"Envioremental Hazards / Sahar and Chen"}>
-            Envioremental Hazards
-          </MenuItem>
-          <MenuItem value={"Envioremental Tips Forum / Shahar and Yoav"}>
-            Envioremental Tips Forum
-          </MenuItem>
-          <MenuItem value={"Reverse Feedback / Lior and Avshalom"}>
-            Reverse Feedback
-          </MenuItem>
-          <MenuItem value={"Quick Bin / Gil and Daniel"}>Quick Bin</MenuItem>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+            <MenuItem value={`Group ${number} / None`}>Group {number}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
