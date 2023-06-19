@@ -27,7 +27,9 @@ const server = app.listen(port, () =>
   console.log(`Server started on port ${port}`)
 );
 const io = socket(server, {
-  cors: ["http://localhost:5174"],
+  cors: [
+    ["http://localhost:5174", "https://hackathon-scoring-api.onrender.com"],
+  ],
   credentials: true,
 });
 
