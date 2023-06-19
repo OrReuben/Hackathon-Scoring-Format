@@ -1,5 +1,7 @@
-export const host = "https://hackathon-scoring-api.onrender.com"
-export const getScores = `${host}/scores`
-export const deleteScores = `${host}/scores/reset`
-export const updateScores = `${host}/update-scores`
-export const loginRoute = `${host}/login`
+export const host = "http://localhost:5000"
+export const userRoutes = `${host}/user`
+export const scoreRoutes = `${host}/scores`
+export const loginRoute = `${userRoutes}/login`
+export const getScores = `${scoreRoutes}`
+export const deleteScores = `${scoreRoutes}/reset`
+export const updateScores = `${scoreRoutes}/update-scores`

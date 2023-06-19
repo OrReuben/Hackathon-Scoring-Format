@@ -1,15 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Score = require("./models/scoreModel");
-const User = require("./models/userSchema");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
+const userRoutes = require("./routes/userRoute");
+const scoreRoutes = require("./routes/scoreRoute");
+const socket = require("socket.io");
 
 // Connect to MongoDB
-mongoose.set('strictQuery', true)
+mongoose.set("strictQuery", true);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -18,80 +18,30 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-
 app.use(cors());
 app.use(express.json());
+app.use("/user", userRoutes);
+app.use("/scores", scoreRoutes);
 
-app.get("/scores", async (req, res) => {
-  try {
-    const scores = await Score.find().sort({ totalScore: -1 });
-    return res.send(scores);
-  } catch (error) {
-    return res.status(400).send({ error: error.message });
-  }
+const server = app.listen(port, () =>
+  console.log(`Server started on port ${port}`)
+);
+const io = socket(server, {
+  cors: ["http://localhost:5174"],
+  credentials: true,
 });
 
-app.delete("/scores/reset", async (req, res) => {
-  try {
-     await Score.deleteMany({});
-    return res.send("All scores has been successfully resetted!");
-  } catch (error) {
-    return res.status(400).send({ error: error.message });
-  }
-});
+let currentTeam = null;
 
-app.post("/register", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    if ((username, password)) {
-      await User.create({ username, password });
-      res.status(200).send("User has been created successfully");
-    } else {
-      res.status(400).send("Something went wrong");
+io.on("connection", (socket) => {
+  socket.on("request-current-team", () => {
+    if (currentTeam !== null) {
+      socket.emit("current-team", currentTeam);
     }
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+  });
+
+  socket.on("change-team", (newTeam) => {
+    currentTeam = newTeam;
+    socket.broadcast.emit("change-team", newTeam);
+  });
 });
-
-app.post("/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username, password });
-
-    if (user) {
-      return res.status(200).send("Successful Login");
-    } else {
-      return res.status(404).send("Incorrect credentials");
-    }
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
-app.patch("/update-scores", async (req, res) => {
-  try {
-    const { project, contestants, score } = req.body;
-
-    const projectExists = await Score.findOne({ project, contestants });
-
-    if (!projectExists) {
-      const newScore = new Score({ project, contestants, totalScore: score });
-      await newScore.save();
-      return res.status(201).send({ message: "Score created successfully" });
-    }
-    try {
-      await Score.updateOne(
-        { project, contestants },
-        { $inc: { totalScore: score } }
-      );
-      return res.status(200).send({ message: "Score updated successfully" });
-    } catch (err) {
-      return res.status(400).send({ error: err.message });
-    }
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-});
-
-app.listen(port, () => console.log(`Server started on port ${port}`));

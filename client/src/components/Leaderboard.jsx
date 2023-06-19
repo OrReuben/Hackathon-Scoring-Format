@@ -58,20 +58,18 @@ export default function Leaderboard({
         </h2>
       ) : (
         <TableContainer component={Paper} sx={{ mt: 3 }}>
+          {user && (
+            <button onClick={clearLeaderboard} className="leaderboard-button">
+              Clear Leaderboard
+            </button>
+          )}
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              {user && (
-                <button
-                  onClick={clearLeaderboard}
-                  className="leaderboard-button"
-                >
-                  Clear Leaderboard
-                </button>
-              )}
               <TableRow>
                 <TableCell align="left">Project</TableCell>
                 <TableCell align="left">Contestants</TableCell>
                 <TableCell align="center">Total Score</TableCell>
+                <TableCell align="center">Total Votes</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -85,6 +83,7 @@ export default function Leaderboard({
                   </TableCell>
                   <TableCell align="left">{row.contestants}</TableCell>
                   <TableCell align="center">{row.totalScore}</TableCell>
+                  <TableCell align="center">{row.totalVotes}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

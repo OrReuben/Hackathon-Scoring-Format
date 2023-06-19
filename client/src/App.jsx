@@ -1,94 +1,95 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import GradeParameter from "./components/GradeParameter";
 import "./App.css";
 import SummaryModal from "./components/SummaryModal";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Leaderboard from "./components/Leaderboard";
 import SelectTeam from "./components/SelectTeam";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import GRADING_PARAMS from "./constants/gradingParams.json";
+import { useForm } from "react-hook-form";
+
+let initialValues = {};
+
+GRADING_PARAMS.forEach(
+  (item) => (initialValues[item.param.replaceAll(" ", "_")] = "")
+);
 
 function App() {
-  const [selectedTeam, setSelectedTeam] = useState("");
-  const [selectedContestants, setSelectedContestants] = useState("");
-  const [goalScore, setGoalScore] = useState(0);
-  const [teamworkScore, setTeamworkScore] = useState(0);
-  const [technologiesScore, setTechnologiesScore] = useState(0);
-  const [frontendDesignScore, setFrontendDesignScore] = useState(0);
-  const [frontendFunctionalityScore, setFrontendFunctionalityScore] =
-    useState(0);
-  const [complicationScore, setComplicationScore] = useState(0);
-  const [creativityScore, setCreativityScore] = useState(0);
-  const [presentationScore, setPresentationScore] = useState(0);
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
   const [user, setUser] = useState(localStorage.getItem("logged"));
+  const [open, setOpen] = useState(false);
+  const {
+    register,
+    formState: { errors, isValid, submitCount },
+    reset,
+    setValue,
+    handleSubmit,
+    getValues,
+    watch,
+  } = useForm({ defaultValues: { ...initialValues, teamAndProject: "" } });
+
+  const getFirstErrorMessage = () => {
+    const firstErrorKey = Object.keys(errors)[0];
+    if (firstErrorKey) {
+      return errors[firstErrorKey].message;
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    if (!isValid) {
+      const firstErrorMessage = getFirstErrorMessage();
+      if (firstErrorMessage) {
+        toast.error(firstErrorMessage);
+      }
+    }
+  }, [submitCount, isValid]);
+
+  const onSubmit = (formValues) => {
+    setOpen(true);
+  };
 
   return (
     <div className="App">
       <ToastContainer />
-      <Header setUser={setUser} />
-      <SelectTeam
-        setSelectedTeam={setSelectedTeam}
-        SelectedTeam={selectedTeam}
-        setSelectedContestants={setSelectedContestants}
-      />
-      <div className="grid">
-        <GradeParameter
-          param={"Goal Reached"}
-          maxParamValue={20}
-          func={setGoalScore}
+      <Header setUser={setUser} user={user} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <SelectTeam
+          register={register}
+          user={user}
+          watch={watch}
+          setValue={setValue}
         />
-        <GradeParameter
-          param={"Teamwork"}
-          maxParamValue={10}
-          func={setTeamworkScore}
+        <div className="grid">
+          {GRADING_PARAMS.map(({ param, maxParamValue }) => (
+            <GradeParameter
+              key={param}
+              param={param}
+              maxParamValue={maxParamValue}
+              register={register}
+              watch={watch}
+              setValue={setValue}
+            />
+          ))}
+        </div>
+        <SummaryModal
+          setRefreshScoreboard={setRefreshScoreboard}
+          entries={Object.entries(getValues())}
+          setOpen={setOpen}
+          open={open}
+          reset={reset}
         />
-        <GradeParameter
-          param={"Technologies used"}
-          maxParamValue={15}
-          func={setTechnologiesScore}
+      </form>
+      {user && (
+        <Leaderboard
+          refreshScoreboard={refreshScoreboard}
+          user={user}
+          setRefreshScoreboard={setRefreshScoreboard}
         />
-        <GradeParameter
-          param={"Front-end Design"}
-          maxParamValue={10}
-          func={setFrontendDesignScore}
-        />
-        <GradeParameter
-          param={"Front-end Functionality"}
-          maxParamValue={10}
-          func={setFrontendFunctionalityScore}
-        />
-        <GradeParameter
-          param={"Complication"}
-          maxParamValue={10}
-          func={setComplicationScore}
-        />
-        <GradeParameter
-          param={"Creativity"}
-          maxParamValue={10}
-          func={setCreativityScore}
-        />
-        <GradeParameter
-          param={"Presentation"}
-          maxParamValue={15}
-          func={setPresentationScore}
-        />
-      </div>
-      <SummaryModal
-        selectedTeam={selectedTeam}
-        goalScore={goalScore}
-        teamworkScore={teamworkScore}
-        technologiesScore={technologiesScore}
-        frontendDesignScore={frontendDesignScore}
-        frontendFunctionalityScore={frontendFunctionalityScore}
-        complicationScore={complicationScore}
-        creativityScore={creativityScore}
-        presentationScore={presentationScore}
-        selectedContestants={selectedContestants}
-        setRefreshScoreboard={setRefreshScoreboard}
-      />
-      {user && <Leaderboard refreshScoreboard={refreshScoreboard} user = {user} setRefreshScoreboard = {setRefreshScoreboard} />}
+      )}
       <Footer />
     </div>
   );

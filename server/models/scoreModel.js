@@ -14,6 +14,11 @@ const ScoreSchema = new Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  totalVotes: {
+    type: Number,
+    required: true,
+    default: 0
   }
 });
 

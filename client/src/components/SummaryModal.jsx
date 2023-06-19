@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -12,65 +11,36 @@ import axios from "axios";
 import { updateScores } from "../apiRoutes";
 
 export default function SummaryModal({
-  selectedTeam,
-  goalScore,
-  teamworkScore,
-  technologiesScore,
-  frontendDesignScore,
-  frontendFunctionalityScore,
-  backendFunctionalityScore,
-  complicationScore,
-  creativityScore,
-  presentationScore,
-  selectedContestants,
   setRefreshScoreboard,
+  entries,
+  open,
+  setOpen,
+  reset,
+  setValue
 }) {
-  const [open, setOpen] = useState(false);
-  const [totalScore, setTotalScore] = useState(0);
   const [loads, setLoads] = useState(false);
-
-  const handleClickOpen = () => {
-    if (selectedTeam === "") {
-      toast.error("Please select a team");
-    } else if (
-      goalScore > 0 &&
-      teamworkScore > 0 &&
-      technologiesScore > 0 &&
-      frontendDesignScore > 0 &&
-      frontendFunctionalityScore > 0 &&
-      complicationScore > 0 &&
-      creativityScore > 0 &&
-      presentationScore > 0
-    ) {
-      setTotalScore(
-        parseInt(goalScore) +
-          parseInt(teamworkScore) +
-          parseInt(technologiesScore) +
-          parseInt(frontendDesignScore) +
-          parseInt(frontendFunctionalityScore) +
-          parseInt(complicationScore) +
-          parseInt(creativityScore) +
-          parseInt(presentationScore)
-      );
-      setOpen(true);
-    } else toast.error("Please fill in the form");
-  };
+  const totalScore = entries.reduce(
+    (acc, value, index) =>
+      index !== entries.length - 1 ? acc + Number(value[1]) : acc,
+    0
+  );
+  let selectedTeam = entries[entries.length - 1][1].split("/")[0];
+  let selectedContestants = entries[entries.length - 1][1].split("/")[1];
 
   const handleClose = () => {
     setOpen(false);
   };
 
   const checkIfVoted = async () => {
-    const allVotes = localStorage.getItem('voted')
-    if(!allVotes){
-      return false
+    const allVotes = localStorage.getItem("voted");
+    if (!allVotes) {
+      return false;
     } else {
-      const parsedVotes = await JSON.parse(allVotes).votes
-      const voteResults = parsedVotes.map((vote) => vote === selectedTeam)
-      console.log(voteResults)
-      return voteResults.includes(true)
+      const parsedVotes = await JSON.parse(allVotes).votes;
+      const voteResults = parsedVotes.map((vote) => vote === selectedTeam);
+      return voteResults.includes(true);
     }
-  }
+  };
 
   const handleSend = async () => {
     try {
@@ -86,6 +56,7 @@ export default function SummaryModal({
         setLoads(false);
         toast.success("Successfully Applied!");
         handleClose();
+        reset();
         setRefreshScoreboard(Math.random());
         if (!localStorage.getItem("voted")) {
           localStorage.setItem(
@@ -96,7 +67,9 @@ export default function SummaryModal({
           const allVotes = JSON.parse(localStorage.getItem("voted"));
           localStorage.setItem(
             "voted",
-            JSON.stringify({ votes: [...allVotes.votes, selectedTeam] })
+            JSON.stringify({
+              votes: [...allVotes.votes, selectedTeam],
+            })
           );
         }
       }
@@ -108,7 +81,7 @@ export default function SummaryModal({
 
   return (
     <div className="modal">
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button type="submit" variant="contained">
         Submit
       </Button>
       <Dialog
@@ -123,22 +96,32 @@ export default function SummaryModal({
         </DialogTitle>
         <DialogContent>
           <div className="score-info">
-            <p>Goal Reached Score : {goalScore}</p>
-            <p>Teamwork Score : {teamworkScore}</p>
-            <p>Technologies Score : {technologiesScore}</p>
-            <p>Front-end Design Score : {frontendDesignScore}</p>
-            <p>Front-end Functionality Score : {frontendFunctionalityScore}</p>
-            <p>Back-end Functionality Score : {backendFunctionalityScore}</p>
-            <p>Complication Score : {complicationScore}</p>
-            <p>Creativity Score : {creativityScore}</p>
-            <p>Presentation Score : {presentationScore}</p>
+            {entries.map(
+              (entry, i) =>
+                i !== entries.length - 1 && (
+                  <p key={entry[0]}>
+                    {entry[0].replaceAll("_", " ")} Score: {entry[1]}
+                  </p>
+                )
+            )}
+            {/* <p>Goal Reached Score : {values[1]}</p>
+            <p>Teamwork Score : {values[2]}</p>
+            <p>Technologies Score : {values[3]}</p>
+            <p>Front-end Design Score : {values[4]}</p>
+            <p>Front-end Functionality Score : {values[5]}</p>
+            <p>Complication Score : {values[6]}</p>
+            <p>Creativity Score : {values[7]}</p>
+            <p>Presentation Score : {values[8]}</p> */}
             <hr />
             <h1>Total Team's Score : {totalScore}</h1>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Back</Button>
+          <Button type="button" onClick={handleClose}>
+            Back
+          </Button>
           <Button
+            type="button"
             variant="contained"
             disabled={loads}
             onClick={handleSend}

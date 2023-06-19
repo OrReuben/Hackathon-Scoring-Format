@@ -8,6 +8,7 @@
     cursor: pointer;
     transition: 0.2s;
     border-radius: 3px;
+    max-width: fit-content;
 }
 .leaderboard-button:hover{
     background-color: red;

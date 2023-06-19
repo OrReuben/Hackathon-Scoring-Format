@@ -1,0 +1,10 @@
+[
+  { "param": "Goal Reached", "maxParamValue": 20 },
+  { "param": "Teamwork", "maxParamValue": 10 },
+  { "param": "Technologies used", "maxParamValue": 15 },
+  { "param": "Front-end Design", "maxParamValue": 10 },
+  { "param": "Front-end Functionality", "maxParamValue": 10 },
+  { "param": "Complication", "maxParamValue": 10 },
+  { "param": "Creativity", "maxParamValue": 10 },
+  { "param": "Presentation", "maxParamValue": 15 }
+]

@@ -1,8 +1,15 @@
 import React from "react";
-import { useState } from "react";
 import "./GradeParameter.css";
-const GradeParameter = ({ param, maxParamValue, func }) => {
-  const [value, setValue] = useState("");
+
+const GradeParameter = ({
+  param,
+  maxParamValue,
+  register,
+  watch,
+  setValue,
+}) => {
+  const paramName = param.replaceAll(" ", "_");
+  const value = watch(paramName);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
@@ -10,8 +17,7 @@ const GradeParameter = ({ param, maxParamValue, func }) => {
       newValue === "" ||
       (/^\d+$/.test(newValue) && newValue <= maxParamValue)
     ) {
-      setValue(newValue);
-      func(newValue);
+      setValue(paramName, newValue);
     }
   };
 
@@ -19,8 +25,15 @@ const GradeParameter = ({ param, maxParamValue, func }) => {
     <div className="param-card">
       <h3>{param}</h3>
       <div>
-        {" "}
-        <input placeholder={`1-${maxParamValue}`} type="tel" value={value} onChange={handleChange} />{" "}
+        <input
+          placeholder={`1-${maxParamValue}`}
+          type="tel"
+          value={value}
+          {...register(paramName, {
+            required: `${param} is required!`,
+          })}
+          onChange={handleChange}
+        />
         <span> / {maxParamValue}</span>
       </div>
     </div>
