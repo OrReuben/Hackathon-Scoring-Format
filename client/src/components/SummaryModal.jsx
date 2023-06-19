@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "./SummaryModal.css";
 import axios from "axios";
 import { updateScores } from "../apiRoutes";
+import Cookies from "js-cookie";
 
 export default function SummaryModal({
   setRefreshScoreboard,
@@ -16,7 +17,7 @@ export default function SummaryModal({
   open,
   setOpen,
   reset,
-  setValue
+  setValue,
 }) {
   const [loads, setLoads] = useState(false);
   const totalScore = entries.reduce(
@@ -31,12 +32,12 @@ export default function SummaryModal({
     setOpen(false);
   };
 
-  const checkIfVoted = async () => {
-    const allVotes = localStorage.getItem("voted");
+  const checkIfVoted = () => {
+    const allVotes = Cookies.get("voted");
     if (!allVotes) {
       return false;
     } else {
-      const parsedVotes = await JSON.parse(allVotes).votes;
+      const parsedVotes = JSON.parse(allVotes).votes;
       const voteResults = parsedVotes.map((vote) => vote === selectedTeam);
       return voteResults.includes(true);
     }
@@ -44,7 +45,7 @@ export default function SummaryModal({
 
   const handleSend = async () => {
     try {
-      if (await checkIfVoted()) {
+      if (checkIfVoted()) {
         toast.error("You have already voted for the team!");
       } else {
         setLoads(true);
@@ -58,18 +59,16 @@ export default function SummaryModal({
         handleClose();
         reset();
         setRefreshScoreboard(Math.random());
-        if (!localStorage.getItem("voted")) {
-          localStorage.setItem(
-            "voted",
-            JSON.stringify({ votes: [selectedTeam] })
-          );
+        if (!Cookies.get("voted")) {
+          Cookies.set("voted", JSON.stringify({ votes: [selectedTeam] }), {
+            expires: 0.5,
+          });
         } else {
-          const allVotes = JSON.parse(localStorage.getItem("voted"));
-          localStorage.setItem(
+          const allVotes = JSON.parse(Cookies.get("voted"));
+          Cookies.set(
             "voted",
-            JSON.stringify({
-              votes: [...allVotes.votes, selectedTeam],
-            })
+            JSON.stringify({ votes: [...allVotes.votes, selectedTeam] }),
+            { expires: 0.5 }
           );
         }
       }

@@ -20,7 +20,6 @@ export default function SelectTeam({ register, user, watch, setValue }) {
     };
 
     const handleCurrentTeam = (currentTeam) => {
-      console.log(currentTeam);
       setValue("teamAndProject", currentTeam);
     };
 

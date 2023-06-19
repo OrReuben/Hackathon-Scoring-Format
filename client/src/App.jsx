@@ -10,6 +10,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GRADING_PARAMS from "./constants/gradingParams.json";
 import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
 
 let initialValues = {};
 
@@ -19,7 +20,7 @@ GRADING_PARAMS.forEach(
 
 function App() {
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
-  const [user, setUser] = useState(localStorage.getItem("logged"));
+  const [user, setUser] = useState(Cookies.get("logged") || null);
   const [open, setOpen] = useState(false);
   const {
     register,

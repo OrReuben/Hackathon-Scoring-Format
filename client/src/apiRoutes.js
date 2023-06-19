@@ -1,4 +1,4 @@
-export const host = "https://hackathon-scoring-api.onrender.com"
+export const host = "http://localhost:5000"
 export const userRoutes = `${host}/user`
 export const scoreRoutes = `${host}/scores`
 export const loginRoute = `${userRoutes}/login`

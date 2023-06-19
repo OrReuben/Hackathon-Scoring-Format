@@ -11,6 +11,7 @@ import axios from "axios";
 import { loginRoute } from "../apiRoutes";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
 
 export default function LoginModal({ setUser }) {
   const [open, setOpen] = useState(false);
@@ -26,14 +27,14 @@ export default function LoginModal({ setUser }) {
     setOpen(false);
   };
 
-  const handleLogin = async ({username,password}) => {
+  const handleLogin = async ({ username, password }) => {
     try {
       setLoads(true);
       const login = await axios.post(`${loginRoute}`, { username, password });
       if (login) {
         setOpen(false);
         toast.success(login.data);
-        localStorage.setItem("logged", true);
+        Cookies.set("logged", true, { expires: 1 });
         setUser(true);
         setLoads(false);
       }

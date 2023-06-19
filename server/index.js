@@ -34,16 +34,32 @@ const io = socket(server, {
 });
 
 let currentTeam = null;
+let connectedSockets = new Set();
 
-io.on("connection", (socket) => {
-  socket.on("request-current-team", () => {
+io.on('connection', (socket) => {
+  connectedSockets.add(socket);
+
+  socket.on('request-current-team', () => {
     if (currentTeam !== null) {
-      socket.emit("current-team", currentTeam);
+      socket.emit('current-team', currentTeam);
     }
   });
 
-  socket.on("change-team", (newTeam) => {
+  socket.on('change-team', (newTeam) => {
     currentTeam = newTeam;
-    socket.broadcast.emit("change-team", newTeam);
+    socket.broadcast.emit('change-team', newTeam);
+  });
+
+  socket.on('disconnect', () => {
+    connectedSockets.delete(socket);
+
+    if (connectedSockets.size === 0) {
+      setTimeout(() => {
+        if (connectedSockets.size === 0) {
+          currentTeam = null;
+        }
+      }, 3 * 60 * 1000); // 3 minutes
+    }
   });
 });
+
