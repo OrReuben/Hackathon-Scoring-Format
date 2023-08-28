@@ -1,6 +1,7 @@
 .param-card{
     padding:1rem 2rem;
     background-color: #222222;
+    position: relative;
     border-radius: 10px;
 }
 .param-card h3{

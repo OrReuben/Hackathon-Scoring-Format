@@ -1,7 +1,16 @@
-export const host = "https://hackathon-scoring-api.onrender.com"
+export const host = import.meta.env.VITE_API_ENDPOINT
 export const userRoutes = `${host}/user`
 export const scoreRoutes = `${host}/scores`
+export const utilsRoutes = `${host}/utils`
+export const adminRoutes = `${host}/admin`
 export const loginRoute = `${userRoutes}/login`
 export const getScores = `${scoreRoutes}`
 export const deleteScores = `${scoreRoutes}/reset`
 export const updateScores = `${scoreRoutes}/update-scores`
+export const getServerToken = `${utilsRoutes}/get-token`
+export const getAllParams = `${adminRoutes}/params`
+export const getAllProjects = `${adminRoutes}/projects`
+export const deleteParam = `${adminRoutes}/params/delete`
+export const deleteProject = `${adminRoutes}/projects/delete`
+export const postParam = `${adminRoutes}/params/add`
+export const postProject = `${adminRoutes}/projects/add`

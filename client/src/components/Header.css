@@ -4,7 +4,7 @@ padding:1rem 0 2rem 0;
 position: relative;
 }
 
-.header-container .login{
+.header-container .btn{
     position: absolute;
     top:0.5rem;
     right:2rem;
@@ -12,10 +12,17 @@ position: relative;
     flex-direction: column;
     align-items: center;
 }
-.login svg{
+
+.header-container .btn{
+    position: absolute;
+    top:0.5rem;
+    right:2rem;
+}
+
+.btn svg{
     font-size: 1.5rem;
 }
-.login span{
+.btn span{
     font-size: 0.75rem;
 }
 @media only screen and (max-width:500px){

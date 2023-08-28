@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import GradeParameter from "./components/GradeParameter";
 import "./App.css";
 import SummaryModal from "./components/SummaryModal";
@@ -11,6 +11,9 @@ import Footer from "./components/Footer";
 import GRADING_PARAMS from "./constants/gradingParams.json";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
+import { useData } from "./context/dataContext";
+import ParamModal from "./components/ParamModal";
+import ProjectModal from "./components/ProjectModal";
 
 let initialValues = {};
 
@@ -20,8 +23,10 @@ GRADING_PARAMS.forEach(
 
 function App() {
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
-  const [user, setUser] = useState(Cookies.get("logged") || null);
+  const [user, setUser] = useState(Cookies.get("userToken") || null);
   const [open, setOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const { initialParams, params } = useData();
   const {
     register,
     formState: { errors, isValid, submitCount },
@@ -30,7 +35,9 @@ function App() {
     handleSubmit,
     getValues,
     watch,
-  } = useForm({ defaultValues: { ...initialValues, teamAndProject: "" } });
+  } = useForm({
+    defaultValues: initialParams,
+  });
 
   const getFirstErrorMessage = () => {
     const firstErrorKey = Object.keys(errors)[0];
@@ -41,7 +48,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (!isValid) {
+    if (!isValid && !editMode) {
       const firstErrorMessage = getFirstErrorMessage();
       if (firstErrorMessage) {
         toast.error(firstErrorMessage);
@@ -49,36 +56,48 @@ function App() {
     }
   }, [submitCount, isValid]);
 
-  const onSubmit = (formValues) => {
+  const onSubmit = () => {
     setOpen(true);
   };
 
   return (
     <div className="App">
       <ToastContainer />
-      <Header setUser={setUser} user={user} />
+      <Header
+        setUser={setUser}
+        user={user}
+        setEditMode={setEditMode}
+        editMode={editMode}
+      />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <SelectTeam
-          register={register}
-          user={user}
-          watch={watch}
-          setValue={setValue}
-        />
+        {!editMode ? (
+          <SelectTeam
+            register={register}
+            user={user}
+            watch={watch}
+            setValue={setValue}
+          />
+        ) : (
+          <ProjectModal />
+        )}
         <div className="grid">
-          {GRADING_PARAMS.map(({ param, maxParamValue }) => (
+          {params.map(({ param, maxParamValue, _id }) => (
             <GradeParameter
               key={param}
               param={param}
+              _id={_id}
               maxParamValue={maxParamValue}
               register={register}
               watch={watch}
               setValue={setValue}
+              editMode={editMode}
             />
           ))}
+          {editMode && <ParamModal />}
         </div>
         <SummaryModal
           setRefreshScoreboard={setRefreshScoreboard}
-          entries={Object.entries(getValues())}
+          entries={getValues()}
           setOpen={setOpen}
           open={open}
           reset={reset}

@@ -6,19 +6,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
-import { loginRoute } from "../apiRoutes";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import Cookies from "js-cookie";
+import { useData } from "../context/dataContext";
+import { postParam } from "../apiRoutes";
 
-export default function LoginModal({ setUser }) {
+export default function ParamModal() {
   const [open, setOpen] = useState(false);
   const [loads, setLoads] = useState(false);
+  const { getData } = useData();
+
   const { register, handleSubmit } = useForm({
-    defaultValues: { username: "", password: "" },
+    defaultValues: { param: "", maxParamValue: "" },
   });
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -27,19 +30,19 @@ export default function LoginModal({ setUser }) {
     setOpen(false);
   };
 
-  const handleLogin = async ({ username, password }) => {
+  const handlePostParam = async ({ param, maxParamValue }) => {
     try {
       setLoads(true);
       await axios.post(
-        loginRoute,
-        { username, password },
+        postParam,
+        { param, maxParamValue },
         { withCredentials: true }
       );
-      setOpen(false);
-      toast.success("Successfully logged!");
-      setUser(Cookies.get("userToken"));
+      await getData();
+      toast.success("Successfully Added");
+      handleClose()
     } catch (err) {
-      toast.error("Incorrect Credentials");
+      toast.error(err.response.data);
     } finally {
       setLoads(false);
     }
@@ -48,34 +51,34 @@ export default function LoginModal({ setUser }) {
   return (
     <div>
       <Button
-        variant="string"
+        variant="contained"
+        sx={{ background: "#222222", minWidth: 300, minHeight: 100 }}
         onClick={handleClickOpen}
-        sx={{ flexDirection: "column" }}
       >
-        <AiOutlineLogin />
+        <AiOutlinePlus />
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Login</DialogTitle>
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <DialogTitle>Post new param</DialogTitle>
+        <form onSubmit={handleSubmit(handlePostParam)}>
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
-              id="name"
-              label="Username"
+              id="param"
+              label="Param"
               type="string"
               fullWidth
               variant="standard"
-              {...register("username")}
+              {...register("param")}
             />
             <TextField
               margin="dense"
-              id="password"
-              label="Password"
-              type="password"
+              id="maxParamValue"
+              label="MaxParamValue"
+              type="number"
               fullWidth
               variant="standard"
-              {...register("password")}
+              {...register("maxParamValue")}
             />
           </DialogContent>
           <DialogActions>
@@ -83,7 +86,7 @@ export default function LoginModal({ setUser }) {
               Cancel
             </Button>
             <Button type="submit" disabled={loads}>
-              Login
+              Post
             </Button>
           </DialogActions>
         </form>

@@ -17,16 +17,13 @@ export default function SummaryModal({
   open,
   setOpen,
   reset,
-  setValue,
 }) {
   const [loads, setLoads] = useState(false);
-  const totalScore = entries.reduce(
-    (acc, value, index) =>
-      index !== entries.length - 1 ? acc + Number(value[1]) : acc,
-    0
-  );
-  let selectedTeam = entries[entries.length - 1][1].split("/")[0];
-  let selectedContestants = entries[entries.length - 1][1].split("/")[1];
+  const totalScore = Object.entries(entries).reduce((acc, value) => {
+    return value[0] !== "teamAndProject" ? acc + Number(value[1]) : acc;
+  }, 0);
+  let selectedTeam = entries.teamAndProject.split("/")[0];
+  let selectedContestants = entries.teamAndProject.split("/")[1];
 
   const handleClose = () => {
     setOpen(false);
@@ -49,12 +46,11 @@ export default function SummaryModal({
         toast.error("You have already voted for the team!");
       } else {
         setLoads(true);
-        await axios.patch(`${updateScores}`, {
+        await axios.patch(updateScores, {
           project: selectedTeam,
           contestants: selectedContestants,
           score: totalScore,
         });
-        setLoads(false);
         toast.success("Successfully Applied!");
         handleClose();
         reset();
@@ -75,6 +71,8 @@ export default function SummaryModal({
     } catch (err) {
       console.log(err.message);
       toast.error("Something went wrong..");
+    } finally {
+      setLoads(false);
     }
   };
 
@@ -95,22 +93,14 @@ export default function SummaryModal({
         </DialogTitle>
         <DialogContent>
           <div className="score-info">
-            {entries.map(
+            {Object.entries(entries).map(
               (entry, i) =>
-                i !== entries.length - 1 && (
+                entry[0] !== "teamAndProject" && (
                   <p key={entry[0]}>
-                    {entry[0].replaceAll("_", " ")} Score: {entry[1]}
+                    {entry[0]} Score: {entry[1]}
                   </p>
                 )
             )}
-            {/* <p>Goal Reached Score : {values[1]}</p>
-            <p>Teamwork Score : {values[2]}</p>
-            <p>Technologies Score : {values[3]}</p>
-            <p>Front-end Design Score : {values[4]}</p>
-            <p>Front-end Functionality Score : {values[5]}</p>
-            <p>Complication Score : {values[6]}</p>
-            <p>Creativity Score : {values[7]}</p>
-            <p>Presentation Score : {values[8]}</p> */}
             <hr />
             <h1>Total Team's Score : {totalScore}</h1>
           </div>

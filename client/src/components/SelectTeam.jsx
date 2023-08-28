@@ -7,10 +7,12 @@ import Select from "@mui/material/Select";
 import TEAMS from "../constants/projectsAndTeams.json";
 import { useEffect } from "react";
 import { useSocket } from "../context/socketContext";
+import { useData } from "../context/dataContext";
 
 export default function SelectTeam({ register, user, watch, setValue }) {
   const value = watch("teamAndProject");
   const { socket, connected } = useSocket();
+  const {projects} = useData()
 
   useEffect(() => {
     if (!connected) return;
@@ -56,7 +58,7 @@ export default function SelectTeam({ register, user, watch, setValue }) {
           {...register("teamAndProject", { required: "Select a team" })}
           onChange={handleChange}
         >
-          {TEAMS.map((team) => (
+          {projects.map((team) => (
             <MenuItem
               key={team.projectName}
               value={`${team.projectName} / ${team.contestants}`}

@@ -1,9 +1,6 @@
 const Score = require("../models/scoreModel");
 
 
-const selectTeam = async (req,res) => {
-
-}
 const getScores = async (req, res) => {
   try {
     const scores = await Score.find().sort({ totalScore: -1 });

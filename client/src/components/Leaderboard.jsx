@@ -26,12 +26,15 @@ export default function Leaderboard({
     try {
       setLoading(true);
       const fetchScores = async () => {
-        await axios.get(`${getScores}`).then(({ data }) => setScores(data));
-        setLoading(false);
+        await axios
+          .get(getScores, { withCredentials: true })
+          .then(({ data }) => setScores(data));
       };
       fetchScores();
     } catch (err) {
       console.log(err.message);
+    } finally {
+      setLoading(false);
     }
   }, [refreshScoreboard]);
 
@@ -40,7 +43,9 @@ export default function Leaderboard({
       return;
     }
     try {
-      const { data } = await axios.delete(deleteScores);
+      const { data } = await axios.delete(deleteScores, {
+        withCredentials: true,
+      });
       setRefreshScoreboard((prev) => prev + 1);
       toast.success(data);
     } catch (err) {
