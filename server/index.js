@@ -40,9 +40,7 @@ const server = app.listen(port, () =>
 );
 
 const io = socket(server, {
-  cors: [
-    ["http://localhost:5174", "https://hackathon-scoring-api.onrender.com"],
-  ],
+  cors: ['http://localhost:5173', 'https://hackathon-scoring.netlify.app'],
   credentials: true,
 });
 
