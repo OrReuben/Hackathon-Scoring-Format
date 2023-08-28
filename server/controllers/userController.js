@@ -18,6 +18,7 @@ const login = async (req, res) => {
 
     const cookieOptions = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "None",
     };
 
     res.cookie("userToken", userToken, cookieOptions);
@@ -26,7 +27,6 @@ const login = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
-
 
 const register = async (req, res) => {
   try {
@@ -51,6 +51,7 @@ const register = async (req, res) => {
 
     const cookieOptions = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "None",
     };
 
     res.cookie("userToken", userToken, cookieOptions);
@@ -59,6 +60,5 @@ const register = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
-
 
 module.exports = { login, register };
