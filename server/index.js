@@ -10,7 +10,6 @@ const utilsRoutes = require("./routes/utilsRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const socket = require("socket.io");
 const cookieParser = require("cookie-parser");
-const { jwtTokenIsValid } = require("./middlewares/jwtMiddleware");
 
 mongoose.set("strictQuery", true);
 mongoose
