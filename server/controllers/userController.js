@@ -19,6 +19,7 @@ const login = async (req, res) => {
     const cookieOptions = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       sameSite: "None",
+      secure: true,
     };
 
     res.cookie("userToken", userToken, cookieOptions);
@@ -52,6 +53,7 @@ const register = async (req, res) => {
     const cookieOptions = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       sameSite: "None",
+      secure: true,
     };
 
     res.cookie("userToken", userToken, cookieOptions);
