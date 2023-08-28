@@ -23,7 +23,7 @@ mongoose
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://hackathon-scoring-api.onrender.com"],
+    origin: ["http://localhost:5173", "https://hackathon-scoring.netlify.app"],
     credentials: true,
   })
 );
