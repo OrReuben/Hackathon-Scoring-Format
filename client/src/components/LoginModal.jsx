@@ -7,11 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
-import axios from "axios";
-import { loginRoute } from "../apiRoutes";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import Cookies from "js-cookie";
+import { useApi } from "../context/ApiContext";
 
 export default function LoginModal({ setUser }) {
   const [open, setOpen] = useState(false);
@@ -19,6 +17,8 @@ export default function LoginModal({ setUser }) {
   const { register, handleSubmit } = useForm({
     defaultValues: { username: "", password: "" },
   });
+  const { publicRequest, loginRoute, setTOKEN } = useApi();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -30,14 +30,15 @@ export default function LoginModal({ setUser }) {
   const handleLogin = async ({ username, password }) => {
     try {
       setLoads(true);
-      await axios.post(
-        loginRoute,
-        { username, password },
-        { withCredentials: true }
-      );
+      const { data: userToken } = await publicRequest.post(loginRoute, {
+        username,
+        password,
+      });
       setOpen(false);
       toast.success("Successfully logged!");
-      setUser(Cookies.get("userToken"));
+      localStorage.setItem("userToken", userToken);
+      setTOKEN(userToken);
+      setUser(userToken);
     } catch (err) {
       toast.error("Incorrect Credentials");
     } finally {

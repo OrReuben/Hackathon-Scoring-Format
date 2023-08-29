@@ -8,22 +8,15 @@ import Leaderboard from "./components/Leaderboard";
 import SelectTeam from "./components/SelectTeam";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import GRADING_PARAMS from "./constants/gradingParams.json";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { useData } from "./context/dataContext";
 import ParamModal from "./components/ParamModal";
 import ProjectModal from "./components/ProjectModal";
 
-let initialValues = {};
-
-GRADING_PARAMS.forEach(
-  (item) => (initialValues[item.param.replaceAll(" ", "_")] = "")
-);
-
 function App() {
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
-  const [user, setUser] = useState(Cookies.get("userToken") || null);
+  const [user, setUser] = useState(localStorage.getItem('userToken') || null);
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const { initialParams, params } = useData();

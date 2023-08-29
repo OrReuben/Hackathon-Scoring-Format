@@ -1,6 +1,12 @@
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import io from 'socket.io-client';
-import { host } from '../apiRoutes';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import io from "socket.io-client";
+import { useApi } from "./ApiContext";
 
 const SocketContext = createContext();
 
@@ -11,16 +17,17 @@ export function useSocket() {
 export function SocketProvider({ children }) {
   const socket = useRef();
   const [connected, setConnected] = useState(false);
+  const { host } = useApi();
 
   useEffect(() => {
     socket.current = io(host);
 
-    socket.current.on('connect', () => {
-      socket.current.emit('request-current-team');
+    socket.current.on("connect", () => {
+      socket.current.emit("request-current-team");
       setConnected(true);
     });
 
-    socket.current.on('disconnect', () => {
+    socket.current.on("disconnect", () => {
       setConnected(false);
     });
 
@@ -38,4 +45,3 @@ export function SocketProvider({ children }) {
     </SocketContext.Provider>
   );
 }
-

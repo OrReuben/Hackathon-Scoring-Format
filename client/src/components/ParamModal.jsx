@@ -7,16 +7,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useData } from "../context/dataContext";
-import { postParam } from "../apiRoutes";
+import { useApi } from "../context/ApiContext";
 
 export default function ParamModal() {
   const [open, setOpen] = useState(false);
   const [loads, setLoads] = useState(false);
   const { getData } = useData();
+  const { userRequest, postParam } = useApi();
 
   const { register, handleSubmit } = useForm({
     defaultValues: { param: "", maxParamValue: "" },
@@ -33,14 +33,14 @@ export default function ParamModal() {
   const handlePostParam = async ({ param, maxParamValue }) => {
     try {
       setLoads(true);
-      await axios.post(
+      await userRequest.post(
         postParam,
         { param, maxParamValue },
         { withCredentials: true }
       );
       await getData();
       toast.success("Successfully Added");
-      handleClose()
+      handleClose();
     } catch (err) {
       toast.error(err.response.data);
     } finally {

@@ -7,9 +7,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "./SummaryModal.css";
-import axios from "axios";
-import { updateScores } from "../apiRoutes";
 import Cookies from "js-cookie";
+import { useApi } from "../context/ApiContext";
 
 export default function SummaryModal({
   setRefreshScoreboard,
@@ -22,6 +21,7 @@ export default function SummaryModal({
   const totalScore = Object.entries(entries).reduce((acc, value) => {
     return value[0] !== "teamAndProject" ? acc + Number(value[1]) : acc;
   }, 0);
+  const { publicRequest, updateScores } = useApi();
   let selectedTeam = entries.teamAndProject.split("/")[0];
   let selectedContestants = entries.teamAndProject.split("/")[1];
 
@@ -46,7 +46,7 @@ export default function SummaryModal({
         toast.error("You have already voted for the team!");
       } else {
         setLoads(true);
-        await axios.patch(updateScores, {
+        await publicRequest.patch(updateScores, {
           project: selectedTeam,
           contestants: selectedContestants,
           score: totalScore,

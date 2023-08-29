@@ -7,12 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
-import axios from "axios";
-import { deleteScores, getScores } from "../apiRoutes";
 import { useEffect } from "react";
 import Loading from "./Loading";
 import "./Leaderboard.css";
 import { toast } from "react-toastify";
+import { useApi } from "../context/ApiContext";
 
 export default function Leaderboard({
   refreshScoreboard,
@@ -21,14 +20,13 @@ export default function Leaderboard({
 }) {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { userRequest, getScores, deleteScores } = useApi();
 
   useEffect(() => {
     try {
       setLoading(true);
       const fetchScores = async () => {
-        await axios
-          .get(getScores, { withCredentials: true })
-          .then(({ data }) => setScores(data));
+        await userRequest.get(getScores).then(({ data }) => setScores(data));
       };
       fetchScores();
     } catch (err) {
@@ -43,9 +41,7 @@ export default function Leaderboard({
       return;
     }
     try {
-      const { data } = await axios.delete(deleteScores, {
-        withCredentials: true,
-      });
+      const { data } = await userRequest.delete(deleteScores);
       setRefreshScoreboard((prev) => prev + 1);
       toast.success(data);
     } catch (err) {

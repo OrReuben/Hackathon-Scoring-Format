@@ -2,10 +2,10 @@ import React from "react";
 import "./GradeParameter.css";
 import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@mui/material";
-import axios from "axios";
-import { deleteParam } from "../apiRoutes";
 import { toast } from "react-toastify";
 import { useData } from "../context/dataContext";
+import { useApi } from "../context/ApiContext";
+
 const GradeParameter = ({
   param,
   maxParamValue,
@@ -17,6 +17,7 @@ const GradeParameter = ({
 }) => {
   const value = watch(param);
   const { getData } = useData();
+  const { userRequest, deleteParam } = useApi();
 
   const handleChange = (e) => {
     const newValue = e.target.value;
@@ -33,9 +34,8 @@ const GradeParameter = ({
       return;
     }
     try {
-      const { data } = await axios.delete(deleteParam, {
+      const { data } = await userRequest.delete(deleteParam, {
         data: { paramId },
-        withCredentials: true,
       });
       toast.success(data);
       await getData();

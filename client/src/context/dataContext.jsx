@@ -3,12 +3,10 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import axios from "axios";
-import { getAllParams, getAllProjects } from "../apiRoutes";
 import Loading from "../components/Loading";
+import { useApi } from "../context/ApiContext";
 
 const DataContext = createContext();
 
@@ -21,11 +19,12 @@ export function DataProvider({ children }) {
   const [params, setParams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [initialParams, setInitialParams] = useState({});
+  const { publicRequest, getAllParams, getAllProjects } = useApi();
 
   const getData = useCallback(async (ignore = false) => {
     const promises = await Promise.all([
-      axios.get(getAllParams),
-      axios.get(getAllProjects),
+      publicRequest.get(getAllParams),
+      publicRequest.get(getAllProjects),
     ]);
     const paramsObject = promises[0].data.reduce((acc, param) => {
       acc[param.param] = "";

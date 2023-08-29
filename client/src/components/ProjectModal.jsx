@@ -7,16 +7,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { BsTrash } from "react-icons/bs";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useData } from "../context/dataContext";
-import { deleteProject, postParam, postProject } from "../apiRoutes";
+import { useApi } from "../context/ApiContext";
 
 export default function ProjectModal() {
   const [open, setOpen] = useState(false);
   const [loads, setLoads] = useState(false);
   const { getData, projects } = useData();
+  const { userRequest, postProject, deleteProject } = useApi();
 
   const { register, handleSubmit } = useForm({
     defaultValues: { projectName: "", contestants: "" },
@@ -33,11 +33,7 @@ export default function ProjectModal() {
   const handlePostProject = async ({ projectName, contestants }) => {
     try {
       setLoads(true);
-      await axios.post(
-        postProject,
-        { projectName, contestants },
-        { withCredentials: true }
-      );
+      await userRequest.post(postProject, { projectName, contestants });
       await getData();
       toast.success("Successfully Added");
       handleClose();
@@ -54,8 +50,7 @@ export default function ProjectModal() {
         return;
       }
       setLoads(true);
-      await axios.delete(deleteProject, {
-        withCredentials: true,
+      await userRequest.delete(deleteProject, {
         data: { projectId },
       });
       await getData();
