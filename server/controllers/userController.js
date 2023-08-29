@@ -20,6 +20,7 @@ const login = async (req, res) => {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       sameSite: "none",
       secure: true,
+      domain: process.env.DOMAIN,
     };
 
     res.cookie("userToken", userToken, cookieOptions);
@@ -54,6 +55,7 @@ const register = async (req, res) => {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       sameSite: "none",
       secure: true,
+      domain: process.env.DOMAIN,
     };
 
     res.cookie("userToken", userToken, cookieOptions);

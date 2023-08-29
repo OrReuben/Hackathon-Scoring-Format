@@ -24,6 +24,7 @@ app.use(
   cors({
     origin: ["http://localhost:5173", "https://hackathon-scoring.netlify.app"],
     credentials: true,
+    methods: ["POST", "GET", "PATCH", "DELETE", "PUT"],
   })
 );
 app.use(express.json());
@@ -39,7 +40,7 @@ const server = app.listen(port, () =>
 );
 
 const io = socket(server, {
-  cors: ['http://localhost:5173', 'https://hackathon-scoring.netlify.app'],
+  cors: ["http://localhost:5173", "https://hackathon-scoring.netlify.app"],
   credentials: true,
 });
 
