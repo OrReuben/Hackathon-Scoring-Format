@@ -18,6 +18,8 @@ const login = async (req, res) => {
 
     const cookieOptions = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "none",
+      secure: true,
       domain: ".netlify.app",
     };
 
@@ -51,6 +53,8 @@ const register = async (req, res) => {
 
     const cookieOptions = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "none",
+      secure: true,
       domain: ".netlify.app",
     };
 
