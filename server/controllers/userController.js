@@ -16,15 +16,15 @@ const login = async (req, res) => {
       expiresIn: "1d",
     });
 
-    const cookieOptions = {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      sameSite: "none",
-      secure: true,
-      domain: process.env.DOMAIN,
-    };
+    // const cookieOptions = {
+    //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    //   sameSite: "none",
+    //   secure: true,
+    //   domain: process.env.DOMAIN,
+    // };
 
-    res.cookie("userToken", userToken, cookieOptions);
-    return res.json("Cookie set successfully");
+    // res.cookie("userToken", userToken, cookieOptions);
+    return res.json(userToken);
   } catch (err) {
     res.status(500).json(err.message);
   }
@@ -51,15 +51,15 @@ const register = async (req, res) => {
       expiresIn: "1d",
     });
 
-    const cookieOptions = {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      sameSite: "none",
-      secure: true,
-      domain: process.env.DOMAIN,
-    };
+    // const cookieOptions = {
+    //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    //   sameSite: "none",
+    //   secure: true,
+    //   domain: process.env.DOMAIN,
+    // };
 
-    res.cookie("userToken", userToken, cookieOptions);
-    return res.json("Cookie set successfully");
+    // res.cookie("userToken", userToken, cookieOptions);
+    return res.json(userToken);
   } catch (err) {
     res.status(500).json(err.message);
   }
