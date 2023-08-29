@@ -9,17 +9,18 @@ import SelectTeam from "./components/SelectTeam";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { useForm } from "react-hook-form";
-import Cookies from "js-cookie";
 import { useData } from "./context/dataContext";
 import ParamModal from "./components/ParamModal";
 import ProjectModal from "./components/ProjectModal";
+import { useApi } from "./context/ApiContext";
 
 function App() {
   const [refreshScoreboard, setRefreshScoreboard] = useState(0);
-  const [user, setUser] = useState(localStorage.getItem('userToken') || null);
+  const [user, setUser] = useState(localStorage.getItem("userToken") || null);
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const { initialParams, params } = useData();
+  const { userRequest, getScores } = useApi();
   const {
     register,
     formState: { errors, isValid, submitCount },
@@ -39,6 +40,21 @@ function App() {
     }
     return null;
   };
+
+  useEffect(() => {
+    if (user) {
+      const checkIfTokenIsValid = async () => {
+        try {
+          await userRequest.get(getScores);
+        } catch (err) {
+          toast.error("Token has expired, Please log in again");
+          setUser(null);
+          localStorage.removeItem('userToken')
+        }
+      };
+      checkIfTokenIsValid();
+    }
+  }, []);
 
   useEffect(() => {
     if (!isValid && !editMode) {
