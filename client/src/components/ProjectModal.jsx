@@ -15,7 +15,7 @@ import { useApi } from "../context/ApiContext";
 export default function ProjectModal() {
   const [open, setOpen] = useState(false);
   const [loads, setLoads] = useState(false);
-  const { getData, projects } = useData();
+  const { data:{projects}, getData } = useData();
   const { userRequest, postProject, deleteProject } = useApi();
 
   const { register, handleSubmit } = useForm({

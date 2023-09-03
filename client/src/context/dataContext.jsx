@@ -15,25 +15,35 @@ export function useData() {
 }
 
 export function DataProvider({ children }) {
-  const [projects, setProjects] = useState([]);
-  const [params, setParams] = useState([]);
+  const [data, setData] = useState({
+    params: [],
+    projects: [],
+    logos: [],
+    initialParams: {},
+  });
   const [loading, setLoading] = useState(true);
-  const [initialParams, setInitialParams] = useState({});
-  const { publicRequest, getAllParams, getAllProjects } = useApi();
+  const { publicRequest, getAllParams, getAllProjects, getAllLogos } = useApi();
 
   const getData = useCallback(async (ignore = false) => {
     const promises = await Promise.all([
       publicRequest.get(getAllParams),
       publicRequest.get(getAllProjects),
+      publicRequest.get(getAllLogos),
     ]);
+
     const paramsObject = promises[0].data.reduce((acc, param) => {
       acc[param.param] = "";
       return acc;
     }, {});
+
     if (!ignore) {
-      setParams(promises[0].data);
-      setProjects(promises[1].data);
-      setInitialParams({ ...paramsObject, teamAndProject: "" });
+      const newData = {
+        params: promises[0].data,
+        projects: promises[1].data,
+        logos: promises[2].data,
+        initialParams: { ...paramsObject, teamAndProject: "" },
+      };
+      setData(newData);
       setLoading(false);
     }
   }, []);
@@ -51,7 +61,7 @@ export function DataProvider({ children }) {
   }
 
   return (
-    <DataContext.Provider value={{ projects, params, initialParams, getData }}>
+    <DataContext.Provider value={{ data, getData }}>
       {children}
     </DataContext.Provider>
   );

@@ -49,10 +49,10 @@ export default function ParamModal() {
   };
 
   return (
-    <div>
+    <div className="param-card-modal">
       <Button
         variant="contained"
-        sx={{ background: "#222222", minWidth: 300, minHeight: 100 }}
+        sx={{ background: "#222222", width:'100%', minHeight: 100 }}
         onClick={handleClickOpen}
       >
         <AiOutlinePlus />

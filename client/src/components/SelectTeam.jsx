@@ -12,7 +12,9 @@ import { useData } from "../context/dataContext";
 export default function SelectTeam({ register, user, watch, setValue }) {
   const value = watch("teamAndProject");
   const { socket, connected } = useSocket();
-  const {projects} = useData()
+  const {
+    data: { projects },
+  } = useData();
 
   useEffect(() => {
     if (!connected) return;

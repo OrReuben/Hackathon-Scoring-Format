@@ -26,19 +26,20 @@ export const ApiProvider = ({ children }) => {
 
   const userRoutes = `/user`;
   const scoreRoutes = `/scores`;
-  const utilsRoutes = `/utils`;
   const adminRoutes = `/admin`;
   const loginRoute = `${userRoutes}/login`;
   const getScores = `${scoreRoutes}`;
   const deleteScores = `${scoreRoutes}/reset`;
   const updateScores = `${scoreRoutes}/update-scores`;
-  const getServerToken = `${utilsRoutes}/get-token`;
+  const getAllLogos = `${adminRoutes}/logos`;
   const getAllParams = `${adminRoutes}/params`;
   const getAllProjects = `${adminRoutes}/projects`;
   const deleteParam = `${adminRoutes}/params/delete`;
   const deleteProject = `${adminRoutes}/projects/delete`;
+  const deleteLogo = `${adminRoutes}/logos/delete`;
   const postParam = `${adminRoutes}/params/add`;
   const postProject = `${adminRoutes}/projects/add`;
+  const postLogo = `${adminRoutes}/logos/add`;
 
   return (
     <ApiContext.Provider
@@ -51,14 +52,16 @@ export const ApiProvider = ({ children }) => {
         getScores,
         deleteScores,
         updateScores,
-        getServerToken,
         getAllParams,
         getAllProjects,
         deleteParam,
         deleteProject,
         postParam,
         postProject,
-        host
+        host,
+        postLogo,
+        deleteLogo,
+        getAllLogos,
       }}
     >
       {children}

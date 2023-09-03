@@ -1,5 +1,6 @@
 const ParamModel = require("../models/paramModel");
 const ProjectModel = require("../models/projectsModel");
+const LogoModel = require("../models/logoModel");
 
 const postNewParam = async (req, res) => {
   try {
@@ -28,6 +29,22 @@ const postNewProject = async (req, res) => {
     }
     await ProjectModel.create({ projectName, contestants });
     res.status(200).json("Project has been successfully created!");
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
+const postNewLogo = async (req, res) => {
+  try {
+    const { logoUrl } = req.body;
+    if (!logoUrl) {
+      return res.status(404).json("Missing parameters!");
+    }
+    if (await LogoModel.findOne({ logoUrl }).lean()) {
+      return res.status(404).json("Logo already exist!");
+    }
+    await LogoModel.create({ logoUrl });
+    res.status(200).json("Logo has been successfully created!");
   } catch (err) {
     res.status(500).json(err.message);
   }
@@ -69,6 +86,24 @@ const deleteProject = async (req, res) => {
   }
 };
 
+const deleteLogo = async (req, res) => {
+  try {
+    const { logoId } = req.body;
+    if (!logoId) {
+      return res.status(404).json("Missing parameters!");
+    }
+    const logoExists = await LogoModel.findById(logoId);
+    if (!logoExists) {
+      return res.status(404).json("Incorrect ID!");
+    }
+
+    await LogoModel.findByIdAndDelete(logoId);
+    res.status(200).json("Logo has been successfully deleted");
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
 const getParams = async (req, res) => {
   try {
     const allParams = await ParamModel.find({});
@@ -87,6 +122,15 @@ const getProjects = async (req, res) => {
   }
 };
 
+const getLogos = async (req, res) => {
+  try {
+    const allLogos = await LogoModel.find({});
+    res.status(200).json(allLogos);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
 module.exports = {
   postNewParam,
   postNewProject,
@@ -94,4 +138,7 @@ module.exports = {
   deleteProject,
   getParams,
   getProjects,
+  postNewLogo,
+  deleteLogo,
+  getLogos,
 };

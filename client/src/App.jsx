@@ -19,7 +19,9 @@ function App() {
   const [user, setUser] = useState(localStorage.getItem("userToken") || null);
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const { initialParams, params } = useData();
+  const {
+    data: { initialParams, params },
+  } = useData();
   const { userRequest, getScores } = useApi();
   const {
     register,
@@ -49,7 +51,7 @@ function App() {
         } catch (err) {
           toast.error("Token has expired, Please log in again");
           setUser(null);
-          localStorage.removeItem('userToken')
+          localStorage.removeItem("userToken");
         }
       };
       checkIfTokenIsValid();
@@ -104,13 +106,15 @@ function App() {
           ))}
           {editMode && <ParamModal />}
         </div>
-        <SummaryModal
-          setRefreshScoreboard={setRefreshScoreboard}
-          entries={getValues()}
-          setOpen={setOpen}
-          open={open}
-          reset={reset}
-        />
+        {!editMode && (
+          <SummaryModal
+            setRefreshScoreboard={setRefreshScoreboard}
+            entries={getValues()}
+            setOpen={setOpen}
+            open={open}
+            reset={reset}
+          />
+        )}
       </form>
       {user && (
         <Leaderboard
@@ -119,7 +123,7 @@ function App() {
           setRefreshScoreboard={setRefreshScoreboard}
         />
       )}
-      <Footer />
+      <Footer editMode={editMode} />
     </div>
   );
 }

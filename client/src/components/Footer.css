@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    padding: 2rem 0;
+    gap:10px;
+    flex-wrap: wrap;
 }
 
 .footer-container .img-container{
@@ -13,9 +13,10 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 .footer-container img{
-    width: 200px;
+    width: 225px;
     mix-blend-mode: multiply;
 }
 .footer-container img:first-child{
