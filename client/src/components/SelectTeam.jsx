@@ -65,7 +65,7 @@ export default function SelectTeam({ register, user, watch, setValue }) {
               key={team.projectName}
               value={`${team.projectName} / ${team.contestants}`}
             >
-              {team.projectName}
+              {team.projectName} / {team.contestants}
             </MenuItem>
           ))}
         </Select>
