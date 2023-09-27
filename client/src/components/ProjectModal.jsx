@@ -36,7 +36,6 @@ export default function ProjectModal() {
       await userRequest.post(postProject, { projectName, contestants });
       await getData();
       toast.success("Successfully Added");
-      handleClose();
     } catch (err) {
       toast.error(err.response.data);
     } finally {
@@ -55,7 +54,6 @@ export default function ProjectModal() {
       });
       await getData();
       toast.success("Successfully Removed");
-      handleClose();
     } catch (err) {
       toast.error(err.response.data);
     } finally {
